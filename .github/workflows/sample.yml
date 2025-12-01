@@ -7,6 +7,14 @@ on:
         description: 'Deployment environment'
         required: true
         type: string
+  workflow_dispatch:
+    inputs:
+      env_name:
+        description: 'Deployment environment'
+        type: choice
+        options:
+          - dev
+          - stg
 
 jobs:
   build:
@@ -45,7 +53,6 @@ jobs:
       - test
       - other-test
       - more-test
-    if: github.ref == 'refs/heads/main'
     steps:
       - name: Deploy application
         run: echo "Deploying application..."
