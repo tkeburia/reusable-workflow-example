@@ -5,9 +5,8 @@ on:
     inputs:
       env_name:
         description: 'Deployment environment'
-        required: false
+        required: true
         type: string
-        default: 'dev'
 
 jobs:
   build:
