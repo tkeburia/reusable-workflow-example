@@ -2,45 +2,29 @@ name: Reusable Workflow
 
 on:
   workflow_call:
-    inputs:
-      env_name:
-        description: 'Deployment environment'
-        required: true
-        type: string
   workflow_dispatch:
-    inputs:
-      env_name:
-        description: 'Deployment environment'
-        type: choice
-        options:
-          - dev
-          - stg
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.env_name }}
     steps:
       - name: Build application
         run: echo "Building application..."
 
   test:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.env_name }}
     needs: build
     steps:
       - name: Run tests
         run: echo "Running tests..."
   other-test:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.env_name }}
     needs: build
     steps:
       - name: Run tests
         run: echo "Running other tests with variable ${{ vars.OTHER_TEST_VARIABLE }}..."
   more-test:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.env_name }}
     needs: build
     steps:
       - name: Run tests
@@ -48,7 +32,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.env_name }}
     needs: 
       - test
       - other-test
