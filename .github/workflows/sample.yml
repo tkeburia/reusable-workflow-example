@@ -19,10 +19,25 @@ jobs:
     steps:
       - name: Run tests
         run: echo "Running tests..."
+  other-test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Run tests
+        run: echo "Running other tests with variable ${{ secrets.OTHER_TEST_VARIABLE }}..."
+  more-test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Run tests
+        run: echo "Running more tests with secret ${{ secrets.MORE_TEST_SECRET }}..."
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+    needs: 
+      - test
+      - other-test
+      - more-test
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Deploy application
